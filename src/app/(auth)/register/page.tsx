@@ -5,7 +5,7 @@ import { buttonVariants } from "@/components/ui/button";
 import RegisterForm from "@/components/auth/forms/register";
 import ProductHighlights from "@/components/auth/product-highlights";
 
-export default function Register() {
+export default function RegisterAccountPage() {
   return (
     <main className="flex min-h-screen w-full items-center justify-center bg-background lg:bg-muted">
       <div className="container relative grid h-full w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-background lg:mx-10 lg:grid-cols-2 lg:px-0 lg:shadow-md xl:mx-0 xl:max-w-[1280px] 2xl:max-w-[1536px]">

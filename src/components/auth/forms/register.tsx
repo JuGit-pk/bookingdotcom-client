@@ -19,11 +19,10 @@ import {
 
 import { PasswordInput } from "@/components/ui/password-input";
 import { registerSchema } from "@/schemas/auth";
+import { useMutation } from "@tanstack/react-query";
+import { registerService } from "@/services";
 
-type TFormData = z.infer<typeof registerSchema> & {
-  confirmPassword: string;
-};
-
+export type TFormData = z.infer<typeof registerSchema>;
 export default function RegisterForm() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
@@ -39,11 +38,23 @@ export default function RegisterForm() {
     },
   });
 
+  const mutation = useMutation({
+    mutationFn: registerService,
+    onSuccess: () => {
+      console.log("Register Account Successfuly");
+    },
+    onError: (error: Error) => {
+      console.log("There is an error");
+      console.log(JSON.stringify(error.message));
+    },
+  });
+
   function onSubmit(values: TFormData) {
-    console.log(values);
-    alert(JSON.stringify(values, null, 2));
+    const { firstName, lastName, password, email } = values;
+    const data = { firstName, lastName, password, email };
+    // alert(JSON.stringify(values, null, 2));
+    mutation.mutate(data);
   }
-  console.log(form.formState.errors);
   return (
     <div className="grid gap-6">
       <Form {...form}>

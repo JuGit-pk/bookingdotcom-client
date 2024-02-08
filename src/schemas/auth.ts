@@ -12,7 +12,7 @@ export const registerSchema = z
       .string()
       .nonempty("Password is required")
       .min(8, "Password must be at least 8 characters"),
-    confirmPassword: z.string(),
+    confirmPassword: z.string().optional(),
     // .refine(
     //   (value) =>
     //     /^(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[a-zA-Z]).{8,}$/.test(value),
