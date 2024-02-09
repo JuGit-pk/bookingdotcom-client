@@ -21,6 +21,7 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { registerSchema } from "@/schemas/auth";
 import { useMutation } from "@tanstack/react-query";
 import { registerService } from "@/services";
+import { toast } from "sonner";
 
 export type TFormData = z.infer<typeof registerSchema>;
 export default function RegisterForm() {
@@ -42,10 +43,11 @@ export default function RegisterForm() {
     mutationFn: registerService,
     onSuccess: () => {
       console.log("Register Account Successfuly");
+      toast.success("Register Successfuly");
     },
     onError: (error: Error) => {
-      console.log("There is an error");
       console.log(JSON.stringify(error.message));
+      toast.error(error.message);
     },
   });
 
