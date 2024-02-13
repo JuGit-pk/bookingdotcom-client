@@ -14,7 +14,7 @@ export default function AuthProvider({ children }: IProps) {
     queryKey: ["validate-token"],
     queryFn: validateTokenService,
     retry: false,
-  });
+  }); // call everytime when the page is refreshed or route is changed
   return (
     <AuthContext.Provider value={{ isLoggedIn: !isError }}>
       {children}

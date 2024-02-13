@@ -4,6 +4,7 @@ import ReactQueryProvider from "@/providers/react-query";
 import { Toaster } from "@/components/ui/sonner";
 import AuthProvider from "@/providers/auth";
 import "./globals.css";
+import Header from "@/components/layout/header";
 
 const inter = Inter({ subsets: ["latin"] });
 

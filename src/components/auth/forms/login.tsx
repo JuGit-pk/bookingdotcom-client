@@ -5,6 +5,7 @@ import Link from "next/link";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
@@ -19,11 +20,15 @@ import {
 } from "@/components/ui/form";
 import { loginSchema } from "@/schemas/auth";
 import { PasswordInput } from "@/components/ui/password-input";
+import { useMutation } from "@tanstack/react-query";
+import { loginService } from "@/services/login";
+import { toast } from "sonner";
 
-type TFormData = z.infer<typeof loginSchema>;
+export type TFormData = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const router = useRouter();
 
   const form = useForm<TFormData>({
     resolver: zodResolver(loginSchema),
@@ -33,10 +38,19 @@ export default function LoginForm() {
       password: "",
     },
   });
-
-  function onSubmit(values: TFormData) {
-    console.log(values);
-    alert(JSON.stringify(values, null, 2));
+  const mutation = useMutation({
+    mutationKey: ["login"],
+    mutationFn: loginService,
+    onSuccess: () => {
+      toast.success("Successfully Authenticated");
+      router.push("/");
+    },
+    onError: (data) => {
+      toast.error(data.message);
+    },
+  });
+  function onSubmit(formData: TFormData) {
+    mutation.mutate(formData);
   }
 
   return (
