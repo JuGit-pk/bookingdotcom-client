@@ -41,12 +41,10 @@ export default function RegisterForm() {
 
   const mutation = useMutation({
     mutationFn: registerService,
-    onSuccess: () => {
-      console.log("Register Account Successfuly");
-      toast.success("Register Successfuly");
+    onSuccess: (data) => {
+      toast.success(data.message);
     },
     onError: (error: Error) => {
-      console.log(JSON.stringify(error.message));
       toast.error(error.message);
     },
   });

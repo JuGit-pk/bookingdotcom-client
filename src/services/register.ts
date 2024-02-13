@@ -7,6 +7,7 @@ export const registerService = async (formData: TFormData) => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify(formData),
   });
   const resBody = await res.json();
@@ -14,5 +15,5 @@ export const registerService = async (formData: TFormData) => {
   if (!res.ok) {
     throw new Error(resBody.message);
   }
-  return res;
+  return resBody;
 };
