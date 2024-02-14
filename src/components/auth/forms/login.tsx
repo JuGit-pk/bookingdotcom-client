@@ -20,8 +20,8 @@ import {
 } from "@/components/ui/form";
 import { loginSchema } from "@/schemas/auth";
 import { PasswordInput } from "@/components/ui/password-input";
-import { useMutation } from "@tanstack/react-query";
-import { loginService } from "@/services/login";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { loginService } from "@/services";
 import { toast } from "sonner";
 
 export type TFormData = z.infer<typeof loginSchema>;
@@ -29,6 +29,7 @@ export type TFormData = z.infer<typeof loginSchema>;
 export default function LoginForm() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const form = useForm<TFormData>({
     resolver: zodResolver(loginSchema),
@@ -42,6 +43,7 @@ export default function LoginForm() {
     mutationKey: ["login"],
     mutationFn: loginService,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["validate-token"] });
       toast.success("Successfully Authenticated");
       router.push("/");
     },
